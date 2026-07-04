@@ -1,9 +1,7 @@
 import { Table, Tag, Button, Divider } from "antd";
 
 export default function Lab2() {
-  // =========================
   // Bài 1
-  // =========================
   const studentColumns = [
     {
       title: "ID",
@@ -47,9 +45,7 @@ export default function Lab2() {
     },
   ];
 
-  // =========================
   // Bài 2
-  // =========================
   const productColumns = [
     {
       title: "ID",
@@ -78,9 +74,7 @@ export default function Lab2() {
     { key: 6, id: 6, name: "Monitor", price: "3500000", category: "Màn hình" },
   ];
 
-  // =========================
   // Bài 3
-  // =========================
   const userColumns = [
     {
       title: "ID",
