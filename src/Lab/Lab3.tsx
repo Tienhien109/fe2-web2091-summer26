@@ -1,6 +1,6 @@
 import { Form, Input, Button } from "antd";
 
-function Bai1() {
+function Lab3() {
   return (
     <div style={{ width: 400, margin: "30px auto" }}>
       <h2>Đăng nhập</h2>
@@ -40,4 +40,4 @@ function Bai1() {
   );
 }
 
-export default Bai1;
+export default Lab3;
