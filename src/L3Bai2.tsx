@@ -1,77 +1,56 @@
 import { Form, Input, Button } from "antd";
 
-function Bai2() {
+function Bai3() {
+
+  const onFinish = (values: any) => {
+    console.log(values);
+  };
+
   return (
-    <div style={{ width: 450, margin: "30px auto" }}>
-      <h2>Đăng ký</h2>
+    <div style={{ width: 500, margin: "30px auto" }}>
+      <h2>Thêm sản phẩm</h2>
 
-      <Form layout="vertical">
-        <Form.Item label="Name">
-          <Input />
-        </Form.Item>
-
+      <Form
+        layout="vertical"
+        onFinish={onFinish}
+      >
         <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              type: "email",
-              message: "Email không đúng định dạng",
-            },
-          ]}
+          label="Tên sản phẩm"
+          name="name"
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Phone"
+          label="Giá"
+          name="price"
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              min: 6,
-              message: "Ít nhất 6 ký tự",
-            },
-          ]}
+          label="Số lượng"
+          name="quantity"
         >
-          <Input.Password />
+          <Input />
         </Form.Item>
 
         <Form.Item
-          label="Confirm Password"
-          name="confirm"
-          dependencies={["password"]}
-          rules={[
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (
-                  !value ||
-                  getFieldValue("password") === value
-                ) {
-                  return Promise.resolve();
-                }
-
-                return Promise.reject(
-                  new Error("Mật khẩu không trùng")
-                );
-              },
-            }),
-          ]}
+          label="Mô tả"
+          name="description"
         >
-          <Input.Password />
+          <Input.TextArea />
         </Form.Item>
 
-        <Button type="primary">
-          Register
+        <Button
+          type="primary"
+          htmlType="submit"
+        >
+          Submit
         </Button>
       </Form>
     </div>
   );
 }
 
-export default Bai2;
+export default Bai3;
