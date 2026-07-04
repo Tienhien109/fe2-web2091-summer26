@@ -1,45 +1,75 @@
-import { Form, Input, Button } from "antd";
+import { useState } from "react";
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Card,
+} from "antd";
 
-function Bai3() {
+function Bai4() {
+  const [data, setData] = useState<any>();
 
   const onFinish = (values: any) => {
-    console.log(values);
+    setData(values);
   };
 
   return (
-    <div style={{ width: 500, margin: "30px auto" }}>
-      <h2>Thêm sản phẩm</h2>
+    <div style={{ width: 600, margin: "30px auto" }}>
+      <h2>Thêm bài viết</h2>
 
       <Form
         layout="vertical"
         onFinish={onFinish}
       >
         <Form.Item
-          label="Tên sản phẩm"
-          name="name"
+          label="Title"
+          name="title"
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Giá"
-          name="price"
+          label="Category"
+          name="category"
+        >
+          <Select
+            options={[
+              {
+                label: "Tin tức",
+                value: "Tin tức",
+              },
+              {
+                label: "Công nghệ",
+                value: "Công nghệ",
+              },
+              {
+                label: "Giải trí",
+                value: "Giải trí",
+              },
+            ]}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Slug"
+          name="slug"
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Số lượng"
-          name="quantity"
+          label="Content"
+          name="content"
         >
-          <Input />
+          <Input.TextArea rows={4} />
         </Form.Item>
 
         <Form.Item
-          label="Mô tả"
-          name="description"
+          label="Image URL"
+          name="image"
         >
-          <Input.TextArea />
+          <Input />
         </Form.Item>
 
         <Button
@@ -49,8 +79,18 @@ function Bai3() {
           Submit
         </Button>
       </Form>
+
+      {data && (
+        <Card style={{ marginTop: 20 }}>
+          <p><b>Title:</b> {data.title}</p>
+          <p><b>Category:</b> {data.category}</p>
+          <p><b>Slug:</b> {data.slug}</p>
+          <p><b>Content:</b> {data.content}</p>
+          <p><b>Image:</b> {data.image}</p>
+        </Card>
+      )}
     </div>
   );
 }
 
-export default Bai3;
+export default Bai4;
