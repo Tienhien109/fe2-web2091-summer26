@@ -11,6 +11,19 @@ function Lab4() {
       image: "image",
       createdAt: "2026-07-10",
     },
+    {
+      key: 2,
+      title: "One Piece",
+      image: "image",
+      createdAt: "2026-07-12",
+    },
+    {
+      key: 3,
+      title: "Dragon Ball",
+      image: "image",
+      createdAt: "2026-07-13",
+    },
+    
     
   ]);
 
