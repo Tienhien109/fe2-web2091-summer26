@@ -59,6 +59,42 @@ function Lab4() {
       title: "Hình ảnh",
       dataIndex: "image",
     },
+    {
+      title: "Created At",
+      dataIndex: "createdAt",
+      render: (date: string) =>
+        new Date(date).toLocaleDateString("vi-VN"),
+    },
+    {
+      title: "Action",
+      render: (_: any, record: any) => (
+        <Button danger onClick={() => handleDelete(record.key)}>
+          Xóa
+        </Button>
+      ),
+    },
+  ];
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h2>Danh sách truyện</h2>
+
+      <Input
+        placeholder="Tìm kiếm truyện..."
+        value={keyword}
+        onChange={(e) => setKeyword(e.target.value)}
+        style={{ width: 300, marginBottom: 20 }}
+      />
+
+      <Table
+        columns={columns}
+        dataSource={filteredData}
+        pagination={{
+          pageSize: 5,
+        }}
+      />
+    </div>
+  );
 }
 
 export default Lab4;
