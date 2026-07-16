@@ -1,6 +1,6 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
-
+import { useMutation } from "@tanstack/react-query";
 interface Story {
   id?: number;
   title: string;
@@ -9,16 +9,13 @@ interface Story {
 }
 
 function Lab5() {
-  const onFinish = async (values: Story) => {
-    try {
-      await axios.post("http://localhost:3001/categories", values);
-
-      alert("Thêm thành công!");
-    } catch (error) {
-      console.log(error);
-      alert("Thêm thất bại!");
-    }
-  };
+    const mutation = useMutation({
+  mutationFn: (values: Story) =>
+    axios.post("http://localhost:3001/categories", values),
+});
+const onFinish = (values: Story) => {
+  mutation.mutate(values);
+};
 
   return (
     <div style={{ width: 500, margin: "30px auto" }}>
@@ -55,9 +52,13 @@ function Lab5() {
           <Checkbox>Active</Checkbox>
         </Form.Item>
 
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
+       <Button
+  type="primary"
+  htmlType="submit"
+  loading={mutation.isPending}
+>
+  Submit
+</Button>
       </Form>
     </div>
   );
