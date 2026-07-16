@@ -1,8 +1,15 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
 
+interface Story {
+  id?: number;
+  title: string;
+  description: string;
+  active: boolean;
+}
+
 function Lab5() {
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: Story) => {
     try {
       await axios.post("http://localhost:3001/categories", values);
 
