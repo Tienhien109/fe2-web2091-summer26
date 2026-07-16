@@ -1,64 +1,76 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
+interface Category {
+  id: number;
+  title: string;
+}
+
 interface Story {
-  id?: number;
   title: string;
   description: string;
-  active: boolean;
+  categoryId: number;
 }
 
 function Lab5() {
-    const mutation = useMutation({
-  mutationFn: (values: Story) =>
-    axios.post("http://localhost:3001/categories", values),
-});
-const onFinish = (values: Story) => {
-  mutation.mutate(values);
-};
+  // Lấy danh sách category
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:3001/categories");
+      return res.data;
+    },
+  });
+
+  // Thêm story
+  const mutation = useMutation({
+    mutationFn: (values: Story) =>
+      axios.post("http://localhost:3001/stories", values),
+  });
+
+  const onFinish = (values: Story) => {
+    mutation.mutate(values);
+    alert("Thêm thành công!");
+  };
 
   return (
     <div style={{ width: 500, margin: "30px auto" }}>
-      <h2>Thêm Category</h2>
+      <h2>Thêm truyện</h2>
 
       <Form layout="vertical" onFinish={onFinish}>
-        {/* Title */}
         <Form.Item
           label="Title"
           name="title"
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng nhập Title!",
-            },
-          ]}
+          rules={[{ required: true, message: "Nhập tiêu đề!" }]}
         >
           <Input />
         </Form.Item>
 
-        {/* Description */}
-        <Form.Item
-          label="Description"
-          name="description"
-        >
+        <Form.Item label="Description" name="description">
           <Input.TextArea rows={4} />
         </Form.Item>
 
-        {/* Active */}
         <Form.Item
-          name="active"
-          valuePropName="checked"
+          label="Category"
+          name="categoryId"
+          rules={[{ required: true, message: "Chọn danh mục!" }]}
         >
-          <Checkbox>Active</Checkbox>
+          <Select
+            options={categories.map((item: Category) => ({
+              value: item.id,
+              label: item.title,
+            }))}
+          />
         </Form.Item>
 
-       <Button
-  type="primary"
-  htmlType="submit"
-  loading={mutation.isPending}
->
-  Submit
-</Button>
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={mutation.isPending}
+        >
+          Submit
+        </Button>
       </Form>
     </div>
   );
