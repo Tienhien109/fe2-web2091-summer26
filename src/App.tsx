@@ -1,4 +1,4 @@
-import Lab4 from "./Lab/Lab4";
+import Lab4 from "./Lab/Lab5";
 
 function App() {
   return <Lab4 />;

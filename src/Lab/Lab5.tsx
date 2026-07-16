@@ -1,34 +1,56 @@
-import { useMutation } from "@tanstack/react-query";
-import { Button, Form, Input, message } from "antd";
+import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
 
 function Lab5() {
-  // useMutation: POST data
-  const { mutate } = useMutation({
-    mutationFn: async (data) => {
-      await axios.post("http://localhost:3000/stories", data);
-    },
-    onSuccess: () => {
-      message.success("Them thanh cong");
-      // nav sang list
-    },
-    onError: () => {
-      message.error("Them that bai");
-    },
-  });
+  const onFinish = async (values: any) => {
+    try {
+      await axios.post("http://localhost:3001/categories", values);
 
-  const onFinish = (values: any) => {
-    console.log(values);
-    mutate(values);
+      alert("Thêm thành công!");
+    } catch (error) {
+      console.log(error);
+      alert("Thêm thất bại!");
+    }
   };
+
   return (
-    <div>
-      <h2>Lab5</h2>
-      <Form onFinish={onFinish}>
-        <Form.Item label="Title" name="title" rules={[]}>
+    <div style={{ width: 500, margin: "30px auto" }}>
+      <h2>Thêm Category</h2>
+
+      <Form layout="vertical" onFinish={onFinish}>
+        {/* Title */}
+        <Form.Item
+          label="Title"
+          name="title"
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng nhập Title!",
+            },
+          ]}
+        >
           <Input />
         </Form.Item>
-        <Button htmlType="submit">Submit</Button>
+
+        {/* Description */}
+        <Form.Item
+          label="Description"
+          name="description"
+        >
+          <Input.TextArea rows={4} />
+        </Form.Item>
+
+        {/* Active */}
+        <Form.Item
+          name="active"
+          valuePropName="checked"
+        >
+          <Checkbox>Active</Checkbox>
+        </Form.Item>
+
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
       </Form>
     </div>
   );
