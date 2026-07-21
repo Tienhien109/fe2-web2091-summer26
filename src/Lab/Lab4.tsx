@@ -5,8 +5,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-
-// import { getStories, deleteStory } from "../services/storyService";
+import { getStories, deleteStory } from "../storyService";
 
 interface Story {
   id: number;
@@ -15,29 +14,20 @@ interface Story {
   createdAt: string;
 }
 
-const API = "http://localhost:3000/stories";
-
-const getStories = async (): Promise<Story[]> => {
-  const res = await axios.get(API);
-  return res.data;
-};
-
-const deleteStory = async (id: number): Promise<void> => {
-  await axios.delete(`${API}/${id}`);
-};
-
 function Lab4() {
   const [keyword, setKeyword] = useState("");
 
   const queryClient = useQueryClient();
 
-  // Lấy danh sách truyện
-  const { data = [], isLoading } = useQuery({
+  const {
+    data = [],
+    isLoading,
+    error,
+  } = useQuery<Story[]>({
     queryKey: ["stories"],
     queryFn: getStories,
   });
 
-  // Xóa truyện
   const mutation = useMutation({
     mutationFn: deleteStory,
     onSuccess: () => {
@@ -51,7 +41,7 @@ function Lab4() {
     mutation.mutate(id);
   };
 
-  const filteredData = data.filter((item: Story) =>
+  const filteredData = data.filter((item) =>
     item.title.toLowerCase().includes(keyword.toLowerCase())
   );
 
@@ -67,12 +57,12 @@ function Lab4() {
     {
       title: "Created At",
       dataIndex: "createdAt",
-      render: (text: string) =>
-        new Date(text).toLocaleDateString("vi-VN"),
+      render: (date: string) =>
+        new Date(date).toLocaleDateString("vi-VN"),
     },
     {
       title: "Action",
-      render: (_: any, record: any) => (
+      render: (_: any, record: Story) => (
         <Button danger onClick={() => handleDelete(record.id)}>
           Xóa
         </Button>
@@ -81,6 +71,8 @@ function Lab4() {
   ];
 
   if (isLoading) return <h2>Loading...</h2>;
+
+  if (error) return <h2>Lỗi tải dữ liệu!</h2>;
 
   return (
     <div style={{ padding: 20 }}>

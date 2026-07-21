@@ -23,12 +23,6 @@
       "createdAt": "2026-07-12"
     },
     {
-      "id": 3,
-      "title": "Dragon Ball",
-      "image": "dragonball.jpg",
-      "createdAt": "2026-07-13"
-    },
-    {
       "id": 4,
       "title": "Doraemon",
       "image": "doraemon.jpg",
@@ -39,12 +33,6 @@
       "title": "Conan",
       "image": "conan.jpg",
       "createdAt": "2026-07-15"
-    },
-    {
-      "id": 6,
-      "title": "Pokemon",
-      "image": "pokemon.jpg",
-      "createdAt": "2026-07-16"
     }
   ]
 }
